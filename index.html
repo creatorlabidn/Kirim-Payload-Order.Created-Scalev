@@ -303,7 +303,33 @@
       font-family: var(--mono);
     }
 
-    /* Scrollbar */
+    /* Payload select */
+    .payload-select-section { margin-bottom: 1.25rem; }
+
+    #payloadSelect {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12.5px;
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%239e9b96' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      transition: border-color 0.15s;
+    }
+
+    #payloadSelect:focus { border-color: var(--border-hover); }
+    #payloadSelect option { background: var(--surface); color: var(--text); }
+
+
     .payload-body::-webkit-scrollbar { width: 4px; height: 4px; }
     .payload-body::-webkit-scrollbar-track { background: transparent; }
     .payload-body::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; }
@@ -320,7 +346,7 @@
         </div>
         <h1>Webhook Sender</h1>
       </div>
-      <p>Kirim payload order.created ke endpoint webhook n8n.</p>
+      <p>Kirim payload event order ke endpoint webhook n8n.</p>
     </div>
 
     <div class="url-section">
@@ -333,11 +359,19 @@
       </div>
     </div>
 
+    <div class="payload-select-section">
+      <div class="lbl">Pilih Payload</div>
+      <select id="payloadSelect" onchange="onPayloadChange()">
+        <option value="order_created">order.created</option>
+        <option value="order_status_changed">order.status_changed</option>
+      </select>
+    </div>
+
     <div class="payload-card">
       <div class="payload-header">
         <div class="payload-header-left">
           <span>Payload</span>
-          <span class="badge">order.created</span>
+          <span class="badge" id="payloadBadge">order.created</span>
         </div>
         <span class="payload-lines" id="payloadLines"></span>
       </div>
@@ -348,7 +382,10 @@
   </div>
 
   <script>
-    const PAYLOAD = {"event":"order.created","unique_id":"event_nfn4P56LMaPmpJ4m3cWQeWpn","timestamp":"2026-05-01T05:40:10.600709Z","entity_type":"order","entity_id":"11009461","data":{"id":11009461,"order_id":"260501WUPMWNI","business":{"username":"creator-lab","unique_id":"IYSI1EVIM1PY6Z2D","client_id":"05c17d62-bd81-4ce4-a05b-e0f5e59d250d"},"secret_slug":"3Ke9p0x8HpCYtzV7SNf6D_69qas-ZbifooMb1sQf","status":"pending","is_probably_spam":false,"mark_as_spam_by":null,"draft_time":"2026-05-01T05:40:10Z","pending_time":"2026-05-01T05:40:10Z","confirmed_time":null,"in_process_time":null,"ready_time":null,"shipped_time":null,"completed_time":null,"rts_time":null,"canceled_time":null,"closed_time":null,"payment_status":"unpaid","unpaid_time":"2026-05-01T05:40:10Z","paid_time":null,"conflict_time":null,"settled_time":null,"store":{"name":"CreatorLab's Store"},"epayment_provider":null,"payment_method":"no_payment","sub_payment_method":null,"financial_entity":null,"payment_account_holder":null,"payment_account_number":null,"transferproof_url":null,"transfer_time":null,"final_variants":{"Sirah Nabawiyah":1},"total_quantity":1,"gross_revenue":"250000.00","scalev_fee":"0.00","payment_fee":"0.00","net_payment_revenue":"250000.00","unique_code_discount":"0.00","discount_code_discount":"0.00","net_revenue":"250000.00","product_price":"250000.00","product_discount":"0.00","other_income_name":"Fee Platform","other_income":"0.00","discount_rate":"0.00","cogs":"0.00","shipping_cost":"0.00","shipping_discount":"0.00","customer_id":22483815,"customer":{"id":22483815,"email":"asddsdhfjhgjkkhkh@gmail.com","phone":null,"name":"Ridwan Testing","confirmed_at":null,"created_at":"2026-05-01T05:40:10Z","last_updated_at":"2026-05-01T05:40:10Z","status":"active"},"destination_address":{"name":"Ridwan Testing","phone":"6282255553833","email":"asddsdhfjhgjkkhkh@gmail.com","address":"","subdistrict":"","city":"","province":"","postal_code":null,"notes":""},"origin_address":null,"warehouse":null,"product_weight":0,"weight_bump":0,"total_weight":0,"courier_service":null,"courier_aggregator_code":null,"shipment_provider_code":null,"rtsproof_url":null,"shipment_receipt":null,"shipment_status":null,"awb_status":"unavailable","awb_ca_status":"unavailable","notes":"","tags":[],"orderlines":[{"quantity":1,"is_inventory":false,"weight":0,"product_name":"Sirah Nabawiyah","variant_unique_id":"variant_M243znWAFG42Q4ib3hQwE3UP","variant_sku":null,"variant_price":"250000.00","variant_cogs":"0.00","product_price":"250000.00","discount":"0.00","discount_code_discount":"0.00","cogs":"0.00","inserted_at":"2026-05-01T05:40:10.469121Z"}],"created_at":"2026-05-01T05:40:10Z","last_updated_at":"2026-05-01T05:40:10Z","message_variables":{"advertiser":"Ridwan","discount_code_code":"","order_link":"https://creatorlabidn.com/o/3Ke9p0x8HpCYtzV7SNf6D_69qas-ZbifooMb1sQf","shipping_cost":"Rp 0","product_price":"Rp 250.000","net_revenue":"Rp 250.000","business":"CreatorLab","order_id":"260501WUPMWNI","product_discount":"Rp 0","city_name":"","handler":"Ridwan","payment_method":"No Payment","net_product_price":"Rp 250.000","items_quantity":"Sirah Nabawiyah x1","shipping_discount":"Rp 0","qrcode_url":"","name":"Ridwan Testing","email":"asddsdhfjhgjkkhkh@gmail.com","epayment_link":"","payment_fee":"Rp 0","gross_revenue":"Rp 250.000","phone":"6282255553833","event_source_url":"https://creatorlabidn.com/fake-order-waylevauto","other_income":"Rp 0","bank_accounts":"","subdistrict_name":"","discount_code_discount":"Rp 0","store":"CreatorLab's Store","address":"","province_name":"","digital_files":"Sirah Nabawiyah: https://creatorlabidn.com/link-product-sirah-nabawiyah","items_name":"Sirah Nabawiyah","notes":"","unique_code_discount":"Rp 0"},"metadata":{"event_source_url":"https://creatorlabidn.com/fake-order-waylevauto"}}};
+    const PAYLOADS = {
+      order_created: {"event":"order.created","unique_id":"event_nfn4P56LMaPmpJ4m3cWQeWpn","timestamp":"2026-05-01T05:40:10.600709Z","entity_type":"order","entity_id":"11009461","data":{"id":11009461,"order_id":"260501WUPMWNI","business":{"username":"creator-lab","unique_id":"IYSI1EVIM1PY6Z2D","client_id":"05c17d62-bd81-4ce4-a05b-e0f5e59d250d"},"secret_slug":"3Ke9p0x8HpCYtzV7SNf6D_69qas-ZbifooMb1sQf","status":"pending","is_probably_spam":false,"mark_as_spam_by":null,"draft_time":"2026-05-01T05:40:10Z","pending_time":"2026-05-01T05:40:10Z","confirmed_time":null,"in_process_time":null,"ready_time":null,"shipped_time":null,"completed_time":null,"rts_time":null,"canceled_time":null,"closed_time":null,"payment_status":"unpaid","unpaid_time":"2026-05-01T05:40:10Z","paid_time":null,"conflict_time":null,"settled_time":null,"store":{"name":"CreatorLab's Store"},"epayment_provider":null,"payment_method":"no_payment","sub_payment_method":null,"financial_entity":null,"payment_account_holder":null,"payment_account_number":null,"transferproof_url":null,"transfer_time":null,"final_variants":{"Sirah Nabawiyah":1},"total_quantity":1,"gross_revenue":"250000.00","scalev_fee":"0.00","payment_fee":"0.00","net_payment_revenue":"250000.00","unique_code_discount":"0.00","discount_code_discount":"0.00","net_revenue":"250000.00","product_price":"250000.00","product_discount":"0.00","other_income_name":"Fee Platform","other_income":"0.00","discount_rate":"0.00","cogs":"0.00","shipping_cost":"0.00","shipping_discount":"0.00","customer_id":22483815,"customer":{"id":22483815,"email":"asddsdhfjhgjkkhkh@gmail.com","phone":null,"name":"Ridwan Fdassas","confirmed_at":null,"created_at":"2026-05-01T05:40:10Z","last_updated_at":"2026-05-01T05:40:10Z","status":"active"},"destination_address":{"name":"Ridwan Fdassas","phone":"6282255553833","email":"asddsdhfjhgjkkhkh@gmail.com","address":"","subdistrict":"","city":"","province":"","postal_code":null,"notes":""},"origin_address":null,"warehouse":null,"product_weight":0,"weight_bump":0,"total_weight":0,"courier_service":null,"courier_aggregator_code":null,"shipment_provider_code":null,"rtsproof_url":null,"shipment_receipt":null,"shipment_status":null,"awb_status":"unavailable","awb_ca_status":"unavailable","notes":"","tags":[],"orderlines":[{"quantity":1,"is_inventory":false,"weight":0,"product_name":"Sirah Nabawiyah","variant_unique_id":"variant_M243znWAFG42Q4ib3hQwE3UP","variant_sku":null,"variant_price":"250000.00","variant_cogs":"0.00","product_price":"250000.00","discount":"0.00","discount_code_discount":"0.00","cogs":"0.00","inserted_at":"2026-05-01T05:40:10.469121Z"}],"created_at":"2026-05-01T05:40:10Z","last_updated_at":"2026-05-01T05:40:10Z","message_variables":{"advertiser":"Ridwan","discount_code_code":"","order_link":"https://creatorlabidn.com/o/3Ke9p0x8HpCYtzV7SNf6D_69qas-ZbifooMb1sQf","shipping_cost":"Rp 0","product_price":"Rp 250.000","net_revenue":"Rp 250.000","business":"CreatorLab","order_id":"260501WUPMWNI","product_discount":"Rp 0","city_name":"","handler":"Ridwan","payment_method":"No Payment","net_product_price":"Rp 250.000","items_quantity":"Sirah Nabawiyah x1","shipping_discount":"Rp 0","qrcode_url":"","name":"Ridwan Fdassas","email":"asddsdhfjhgjkkhkh@gmail.com","epayment_link":"","payment_fee":"Rp 0","gross_revenue":"Rp 250.000","phone":"6282255553833","event_source_url":"https://creatorlabidn.com/fake-order-waylevauto","other_income":"Rp 0","bank_accounts":"","subdistrict_name":"","discount_code_discount":"Rp 0","store":"CreatorLab's Store","address":"","province_name":"","digital_files":"Sirah Nabawiyah: https://creatorlabidn.com/link-product-sirah-nabawiyah","items_name":"Sirah Nabawiyah","notes":"","unique_code_discount":"Rp 0"},"metadata":{"event_source_url":"https://creatorlabidn.com/fake-order-waylevauto"}}},
+      order_status_changed: {"event":"order.status_changed","unique_id":"event_4pH7toKLuIoOdrNnLqIbY54u","timestamp":"2026-05-03T17:57:15.065910Z","entity_type":"order","entity_id":"11088376","data":{"id":11088376,"customer_id":22545535,"customer":{"id":22545535,"email":"najwasihab@gmail.com","phone":null,"name":"Ridwan Tassa Testing","confirmed_at":null,"created_at":"2026-05-03T17:49:42Z","last_updated_at":"2026-05-03T17:49:42Z","status":"active"},"order_id":"260504IJJHOJD","business":{"username":"creator-lab","unique_id":"IYSI1EVIM1PY6Z2D","client_id":"05c17d62-bd81-4ce4-a05b-e0f5e59d250d"},"status":"completed","is_probably_spam":false,"mark_as_spam_by":null,"draft_time":"2026-05-03T17:49:42Z","pending_time":"2026-05-03T17:49:42Z","confirmed_time":"2026-05-03T17:57:14Z","in_process_time":null,"ready_time":null,"shipped_time":null,"completed_time":"2026-05-03T17:57:15Z","rts_time":null,"canceled_time":null,"closed_time":null,"created_at":"2026-05-03T17:49:42Z","last_updated_at":"2026-05-03T17:57:15Z","shipment_receipt":null,"shipment_status":null,"awb_ca_status":"unavailable","metadata":{"event_source_url":"https://creatorlabidn.com/form-order-waylevauto"}}}
+    };
 
     function syntaxHighlight(json) {
       return json
@@ -363,15 +400,30 @@
         });
     }
 
-    const raw = JSON.stringify(PAYLOAD, null, 2);
-    const lines = raw.split('\n').length;
-    document.getElementById('payloadPreview').innerHTML = syntaxHighlight(raw);
-    document.getElementById('payloadLines').textContent = lines + ' lines';
+    function renderPayload(key) {
+      const payload = PAYLOADS[key];
+      const raw = JSON.stringify(payload, null, 2);
+      const lines = raw.split('\n').length;
+      document.getElementById('payloadPreview').innerHTML = syntaxHighlight(raw);
+      document.getElementById('payloadLines').textContent = lines + ' lines';
+      document.getElementById('payloadBadge').textContent = payload.event;
+    }
+
+    function onPayloadChange() {
+      const key = document.getElementById('payloadSelect').value;
+      renderPayload(key);
+      document.getElementById('statusBox').className = 'status-box';
+    }
+
+    // Init
+    renderPayload('order_created');
 
     async function sendWebhook() {
       const url = document.getElementById('webhookUrl').value.trim();
       const btn = document.getElementById('sendBtn');
       const box = document.getElementById('statusBox');
+      const key = document.getElementById('payloadSelect').value;
+      const payload = PAYLOADS[key];
 
       if (!url) {
         box.className = 'status-box error';
@@ -388,7 +440,7 @@
         const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(PAYLOAD)
+          body: JSON.stringify(payload)
         });
 
         let body = '';
